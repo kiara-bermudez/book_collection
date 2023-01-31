@@ -13,4 +13,14 @@ RSpec.describe 'Creating a book', type: :feature do
     expect(page).to have_content('Book was successfully created.')
     expect(Book.last.title).to eq('The Great Gatsby')
   end
+
+  scenario 'missing title' do
+    visit new_book_path
+    fill_in 'book[author]', with: 'F. Scott Fitzgerald'
+    fill_in 'book[price]', with: '6.77'
+    fill_in 'book[published_date]', with: '1925-04-10'
+    click_on 'Add New Book'
+    
+    expect(page).not_to have_content('Book was successfully created.')
+  end
 end
